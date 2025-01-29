@@ -329,7 +329,7 @@
 
     // Load selected music file from the server
     function loadMusicFile(fileName) {
-      const filePath = `/music/${fileName}`; // Ensure this path is correct
+      const filePath = `music/${fileName}`; // Ensure this path is correct
       fetch(filePath)
         .then(response => response.arrayBuffer())
         .then(arrayBuffer => {
@@ -352,7 +352,7 @@
       const fileName = e.target.value;
       if (fileName) {
         initAudio(); //  Ensure audio context is initialized
-        loadMusicFile(music/fileName);
+        loadMusicFile(fileName);
         document.getElementById('controls').classList.add('hidden');
       }
     });
