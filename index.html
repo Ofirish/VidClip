@@ -356,7 +356,43 @@
         document.getElementById('controls').classList.add('hidden');
       }
     });
+    
+  // Event listeners for touch support
+  document.getElementById('playButton').addEventListener('touchstart', function () {
+    if (source && audioContext.state === 'suspended') {
+      audioContext.resume();
+      isPlaying = true;
+      visualize();
+      changeBackgroundImage();
+    } else if (!isPlaying && document.getElementById('audioFile').files.length > 0) {
+      const file = document.getElementById('audioFile').files[0];
+      initAudio();
+      loadAudio(file);
+    }
+  });
 
+  document.getElementById('stopButton').addEventListener('touchstart', function () {
+    if (source) {
+      source.stop();
+      isPlaying = false;
+      document.body.style.backgroundColor = 'black';
+    }
+  });
+
+  document.getElementById('hideControlsButton').addEventListener('touchstart', function () {
+    document.getElementById('controls').classList.add('hidden');
+  });
+
+  let lastTouchTime = 0;
+
+  document.addEventListener('touchstart', function (e) {
+    const currentTime = new Date().getTime();
+    if (currentTime - lastTouchTime < 500) { // 500ms threshold for double touch
+      document.getElementById('controls').classList.toggle('hidden');
+    }
+    lastTouchTime = currentTime;
+  });
+    
     // Fetch music files on page load
     window.addEventListener('load', fetchMusicFiles);
   </script>
